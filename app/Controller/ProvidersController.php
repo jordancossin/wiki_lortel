@@ -22,8 +22,54 @@ class ProvidersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Provider->recursive = 0;
-		$this->set('providers', $this->Paginator->paginate());
+
+		if (isset($this->request->data['Search'])){
+			$nameProvider = $this->request->data['Search']['name'];
+			$nameTag = $this->request->data['Search']['tag'];
+			
+			$options['fields'] = array('DISTINCT Provider.id', 'Provider.name');
+
+			$options['joins'] = array(
+					array('table' => 'tags_providers',
+						'alias' => 'TagProvider',
+						'type' => 'inner',
+						'conditions' => array(
+							'Provider.id = TagProvider.id_provider'
+						)
+					),
+					array('table' => 'tags',
+						'alias' => 'Tag',
+						'type' => 'inner',
+						'conditions' => array(
+							'TagProvider.id_tag = Tag.id'
+						)
+					)
+				);
+
+			if($nameProvider != '' && $nameTag != '')
+			{
+				$options['conditions'] = array(
+					'Provider.name LIKE ' => '%'.$nameProvider.'%', 'OR' => array(
+					'Tag.name IN ' => '('.$nameTag.')'));
+			}
+			elseif($nameProvider != '')
+			{
+				$options['conditions'] = array(
+					'Provider.name LIKE ' => '%'.$nameProvider.'%');
+			}
+			elseif($nameTag != '')
+			{
+				$options['conditions'] = array(
+					'Tag.name IN ' => '('.$nameTag.')');
+			}
+
+			$providers_found = $this->Provider->find('all', $options);			
+			$this->set('providers', $providers_found);
+		}
+		else
+		{
+			$this->set('providers', $this->Provider->find('all'));
+		}
 	}
 
 /**
@@ -149,42 +195,7 @@ class ProvidersController extends AppController {
 		{
 			$this->set('providers', $this->Provider->find('all'));
 		}
-		
-	// $providers_found = $this->Provider->find('all', [
-				// 'conditions' => array(
-				// 'Provider.name LIKE ' => '%'.$name.'%',
-				// 'OR' => array(
-					// 'Tag.name LIKE' => '%'.$tag.'%'
-				   // )
-			// ),
-				// 'limit' => 10
-			// ]);
 
-		
-		// if (!$this->Provider->exists($id)) {
-			// throw new NotFoundException(__('Invalid provider'));
-		// }
-		// $options = array('conditions' => array('Provider.' . $this->Provider->primaryKey => $id));
-		// $this->set('provider', $this->Provider->find('first', $options));
-		
-		
-		// $this->Provider->recursive = 0;
-		// if (isset($this->request->data['Fournisseur']))
-		// {
-
-			// $provider_name = $this->request->data['Fournisseur']['name'];
-
-			// $this->Paginator->settings = array(
-		        // 'conditions' => array('Provider.name LIKE' => '%'.$provider_name.'%'),
-		        // 'limit' => 10
-		    // );
-		    // $providers = $this->Paginator->paginate('Provider');
-		    // $this->set(compact('providers'));
-		// }
-		// else
-		// {
-			// $this->set('providers', $this->Paginator->paginate('Provider'));
-		// }
 	}
 	
 	public function detailfrs($id = null){
@@ -204,10 +215,6 @@ class ProvidersController extends AppController {
 	}
 	
 	public function update(){
-		
-	}
-	
-	public function login(){
 		
 	}
 }

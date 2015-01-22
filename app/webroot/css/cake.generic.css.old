@@ -23,11 +23,156 @@
 
 /** General Style Info **/
 body {
-	background: #003d4c;
-	color: #fff;
+	background:#B0C4DE;
+	color: #000;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
 	margin: 0;
+}
+
+.content {
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+width: 340px;
+height: 300px;
+background-color: rgba(9, 9, 9, 0.05);
+margin: 200px 500px;
+padding: 40px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+-moz-box-shadow: 0 0 10px black;
+-webkit-box-shadow: 0 0 10px black;
+box-shadow: 0 0 10px black;
+}
+.content .title {
+text-align: center;
+font-size: 1.8rem;
+font-weight: 400;
+padding-bottom: 30px;
+}
+
+#menu-accordeon {
+  padding:0;
+  margin:0;
+  list-style:none;
+  text-align: center;
+  width: 180px;
+}
+#menu-accordeon ul {
+  padding:0;
+  margin:0;
+  list-style:none;
+  text-align: center;
+}
+#menu-accordeon li {
+   background-color:#729EBF; 
+   background-image:-webkit-linear-gradient(top, #729EBF 0%, #333A40 100%);
+   background-image: linear-gradient(to bottom, #729EBF 0%, #333A40 100%);
+   border-radius: 6px;
+   margin-bottom:2px;
+   box-shadow: 3px 3px 3px #999;
+   border:solid 1px #333A40
+}
+#menu-accordeon li li {
+   max-height:0;
+   overflow: hidden;
+   transition: all .5s;
+   border-radius:0;
+   background: #444;
+   box-shadow: none;
+   border:none;
+   margin:0
+}
+#menu-accordeon a {
+  display:block;
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 0;
+  font-family: verdana;
+  font-size:1.2em
+}
+#menu-accordeon ul li a, #menu-accordeon li:hover li a {
+  font-size:1em
+}
+#menu-accordeon li:hover {
+   background: #729EBF
+}
+#menu-accordeon li li:hover {
+   background: #999;
+}
+#menu-accordeon ul li:last-child {
+   border-radius: 0 0 6px 6px;
+   border:none;
+}
+#menu-accordeon li:hover li {
+  max-height: 15em;
+}
+
+<style class="cp-pen-styles">*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+  
+#page .wrapper{
+    width:40%;
+    }
+	
+	
+#page .wrapper .table{
+      display:table;
+      width:50%;
+      background:linear-gradient(to bottom, #4584D3 0%, #225390 100%);
+      border-radius:10px;
+      padding:3px;
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+	  }
+    
+    #page .wrapper .table > * {
+  vertical-align: middle;
+}
+#page .wrapper .table .table-cell-flex {
+  display: table-cell;
+  width: 100%;
+}
+#page .wrapper .table .table-cell-flex input {
+  color: #555;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #3176ce;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
+#page .wrapper .table .table-cell-fixed {
+  display: table-cell;
+  white-space: nowrap;
+}
+#page .wrapper .table .table-cell-fixed a {
+  margin-left: 5px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  text-align: middle;
+  transition: all 0.2s linear;
+}
+#page .wrapper .table .table-cell-fixed a:hover {
+  background: #3176ce;
+}
+#page .wrapper .table .table-cell-fixed a:active {
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+.middle:before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+.middle > * {
+  display: inline-block;
+  vertical-align: middle;
 }
 a {
 	color: #003d4c;
@@ -45,13 +190,18 @@ h1, h2, h3, h4 {
 	font-weight: normal;
 	margin-bottom:0.5em;
 }
+
+
 h1 {
-	background:#fff;
+	background:rgba(9, 9, 9, 0.1);;
 	color: #003d4c;
 	font-size: 100%;
+	font-size: 3.9rem;
+	font-family: 'Ubuntu', sans-serif;
+	text-align: center;
 }
 h2 {
-	background:#fff;
+	background:;
 	color: #e32;
 	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
 	font-size: 190%;
@@ -65,6 +215,10 @@ h4 {
 	color: #993;
 	font-weight: normal;
 }
+#searchbar{position:relative; width:1040px; height:auto;}
+.formulaire               {display:inline-block;}
+.formulaire .champ       {width:600px; height:35px;}
+.formulaire .bouton       { background-image: url(images/searchbar_button.png);background-repeat: no-repeat;width: 35px;height: 35px;padding: 0; }
 ul, li {
 	margin: 0 12px;
 }
@@ -77,17 +231,15 @@ p {
 	text-align: left;
 }
 
-#header{
-	padding: 10px 20px;
-}
+
 #header h1 {
 	line-height:20px;
 	background: #003d4c url('../img/cake.icon.png') no-repeat left;
-	color: #fff;
+	color: #000;
 	padding: 0px 30px;
 }
 #header h1 a {
-	color: #fff;
+	color: #000;
 	background: #003d4c;
 	font-weight: normal;
 	text-decoration: none;
@@ -109,7 +261,7 @@ p {
 	padding: 6px 10px;
 }
 #header a, #footer a {
-	color: #fff;
+	color: #000;
 }
 #cake-powered {
 	float: right;
@@ -141,13 +293,16 @@ table {
 	clear: both;
 	color: #333;
 	margin-bottom: 10px;
-	width: 100%;
+	width: 40%;
+	text-align: center;
+	 margin: 10px;
 }
 th {
 	border:0;
 	border-bottom:2px solid #555;
 	text-align: left;
 	padding:4px;
+
 }
 th a {
 	display: block;
@@ -161,10 +316,12 @@ th a.desc:after {
 	content: ' ⇡';
 }
 table tr td {
-	padding: 6px;
+	padding: 20px;
 	text-align: left;
 	vertical-align: top;
 	border-bottom:1px solid #ddd;
+	text-align: center;
+	width: 120px;
 }
 table tr:nth-child(even) {
 	background: #f9f9f9;
@@ -261,9 +418,9 @@ dd {
 /** Forms **/
 form {
 	clear: both;
-	margin-right: 20px;
 	padding: 0;
 	width: 95%;
+	
 }
 fieldset {
 	border: none;
@@ -292,6 +449,7 @@ form div {
 	margin-bottom: 1em;
 	padding: .5em;
 	vertical-align: text-top;
+	margin: : 30px 30px;
 }
 form .input {
 	color: #444;
@@ -318,8 +476,7 @@ input, textarea {
 	clear: both;
 	font-size: 140%;
 	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
-	padding: 1%;
-	width:98%;
+	
 }
 select {
 	clear: both;
@@ -327,7 +484,7 @@ select {
 	vertical-align: text-bottom;
 }
 select[multiple=multiple] {
-	width: 100%;
+	width: 20%;
 }
 option {
 	font-size: 120%;
@@ -352,6 +509,24 @@ input[type=radio] {
 .radio label {
 	margin: 0 0 6px 20px;
 	line-height: 26px;
+}
+input[type=submit] {
+	display: inline;
+	font-size: 110%;
+	width: auto;
+}
+form .submit input[type=submit] {
+	background:#62af56;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#76BF6B), to(#3B8230));
+	background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
+	background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
+	border-color: #2d6324;
+	color: #fff;
+	text-shadow: rgba(0, 0, 0, 0.5) 0px -1px 0px;
+	padding: 8px 10px;
+}
+form .submit input[type=submit]:hover {
+	background: #5BA150;
 }
 /* Form errors */
 form .error {
@@ -490,10 +665,54 @@ p.error em {
 	clear: both;
 }
 
+/* Buttons and button links */
+input[type=submit],
+.actions ul li a,
+.actions a {
+	font-weight:normal;
+	padding: 4px 8px;
+	background: #dcdcdc;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dcdcdc));
+	background-image: -webkit-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -moz-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -ms-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -o-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: linear-gradient(top, #fefefe, #dcdcdc);
+	color:#333;
+	border:1px solid #bbb;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	text-decoration: none;
+	text-shadow: #fff 0px 1px 0px;
+	min-width: 0;
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
+	-webkit-user-select: none;
+	user-select: none;
+}
 .actions ul li a:hover,
 .actions a:hover {
 	background: #ededed;
 	border-color: #acacac;
+	text-decoration: none;
+}
+input[type=submit]:active,
+.actions ul li a:active,
+.actions a:active {
+	background: #eee;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#dfdfdf), to(#eee));
+	background-image: -webkit-linear-gradient(top, #dfdfdf, #eee);
+	background-image: -moz-linear-gradient(top, #dfdfdf, #eee);
+	background-image: -ms-linear-gradient(top, #dfdfdf, #eee);
+	background-image: -o-linear-gradient(top, #dfdfdf, #eee);
+	background-image: linear-gradient(top, #dfdfdf, #eee);
+	text-shadow: #eee 0px 1px 0px;
+	-moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
+	border-color: #aaa;
 	text-decoration: none;
 }
 

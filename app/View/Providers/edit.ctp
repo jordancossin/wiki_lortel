@@ -1,37 +1,55 @@
-<div class="providers form">
-<?php echo $this->Form->create('Provider'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Provider'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('name');
-		echo $this->Form->input('description');
-		echo $this->Form->input('activate');
-		echo $this->Form->input('created_id_user');
-		echo $this->Form->input('modified_id_user');
-		echo $this->Form->input('Product');
-		echo $this->Form->input('Tag');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<div class="row">
+	<ol class="breadcrumb">
+	  <li><?= $this->Html->link('Accueil',array('controller' => 'Dashboard')); ?></li>
+	  <li><?= $this->Html->link('Fournisseurs',array('controller' => 'Providers', 'action' => 'index')); ?></li>
+	  <li class="active"><?php if(isset($this->request->data['Provider']['name'])){echo $this->request->data['Provider']['name'];} ?></li>
+	</ol>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Provider.id')), array(), __('Are you sure you want to delete # %s?', $this->Form->value('Provider.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Providers'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Create User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Documents'), array('controller' => 'documents', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Documents'), array('controller' => 'documents', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Pictures'), array('controller' => 'pictures', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Pictures'), array('controller' => 'pictures', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Faqs'), array('controller' => 'faqs', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Faqs'), array('controller' => 'faqs', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Tags'), array('controller' => 'tags', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Tag'), array('controller' => 'tags', 'action' => 'add')); ?> </li>
-	</ul>
+<div class="row">
+	<div class="col-md-12">
+		<div class="right">
+			<?php echo $this->Html->link(__('<i class="fa fa-chevron-circle-right"></i> Voir tous les produits de ce fournisseur'), 
+											array('controller' => 'Products', 'action' => 'add'), 
+											array('class' => 'btn btn-primary', 'escape'=>false)); ?>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8">
+		<fieldset>
+			<legend><i class="fa fa-users"></i> <?php if(isset($this->request->data['Provider']['name'])){echo $this->request->data['Provider']['name'];} ?></legend>
+			<?php echo $this->Form->create('Provider', array('class','row')); ?>
+			<?php
+				echo $this->Form->input('id');
+				echo $this->Form->input('name', array('label' => 'Nom'));
+				echo $this->Form->input('description', array('label' => 'Description'));
+			?>
+			<?= $this->Form->end(array('label'=>'Enregistrer les modifications', 'class' => 'btn btn-success btn-search')); ?>
+		</fieldset>
+
+		<fieldset>
+			<legend><i class="fa fa-file"></i> Documents</legend>
+		</fieldset>
+	</div>
+	<div class="col-md-4">
+		<fieldset>
+			<legend><i class="fa fa-tags"></i> Mots clés</legend>
+
+			<?= $this->Form->create('Provider',array('action'=>'index')); ?>
+				<?= $this->Form->input('Add.tag.name', array('label'=> 'Ajouter un mot clé')); ?>
+			<?= $this->Form->end(array('label'=>'Ajouter', 'class' => 'btn btn-success btn-search')); ?>
+
+			<ul class="list-unstyled">
+			<?php
+				foreach($tags as $key => $value){
+					echo '<li><a href="Prodivders/edit/'.$key.'"><i class="fa fa-trash del-tag"></i></a> '.$value.'</li>';
+				}
+			?>
+			</ul>
+		</fieldset>
+	</div>
+
+	
 </div>
