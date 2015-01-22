@@ -1,0 +1,26 @@
+#menu_horizontal {
+margin-left: auto;
+margin-right: auto;
+background-color : rgba(9, 9, 9, 0.1);;
+list-style-type : none;
+line-height: 50px;
+}  
+#menu_horizontal li {  
+    display: inline;  
+    list-style: none; 
+	margin: 0 13px;	
+}  
+#menu_horizontal a {  
+    display:inline-block;  
+    margin: 0 115px;  
+}  
+ul#menu_horizontal a img { 
+border : none;
+padding :  0 0.3em;
+height : 70px;
+width: 100px
+}
+.dropdown {
+position: relative;
+border-bottom: 5px solid white;
+}
