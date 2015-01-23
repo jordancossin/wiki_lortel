@@ -7,8 +7,7 @@
 	<div class="input-group">
 		<?= $this->Form->create('User'); ?>
 		<?= $this->Form->input('username', array('label'=>"Nom d'utilisateur", 'type'=> 'text', 'class'=>'form-control')); ?>
-
 		<?= $this->Form->input('password', array('label'=>"Mot de passe", 'type'=> 'text', 'class'=>'form-control')); ?>
-		<?= $this->Form->end("Se connecter"); ?>
+		<?= $this->Form->end(array('label'=>'Se connecter', 'class' => 'btn btn-success')); ?>
 	</div>
 </div>

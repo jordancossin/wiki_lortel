@@ -1,13 +1,12 @@
 <div class="categories index">
-	<h2><?php echo __('Categories'); ?></h2>
-
-
+	
 	<div class="row">
-	    <div class="span8">
-	        <?php echo $this->Form->create('Category',array('action'=>'index')); ?>
-            <?php echo $this->Form->input('Search.name', array('label'=>"Rechercher une catégorie")); ?>
-      		<?php echo $this->Form->end('Rechercher'); ?>
-	    </div>
+		<fieldset>
+			<legend><i class="fa fa-search"></i> Rechercher des produits</legend>
+			<?= $this->Form->create('Category',array('action'=>'index')); ?>
+				<?= $this->Form->input('Search.name', array('label'=> 'Catégorie/produit')); ?>
+			<?= $this->Form->end(array('label'=>'Rechercher', 'class' => 'btn btn-success btn-search')); ?>
+		</fieldset>
 	</div>
 
 	<table cellpadding="0" cellspacing="0">
