@@ -1,7 +1,9 @@
 
 <ol class="breadcrumb">
-  <li><?= $this->Html->link('Accueil',array('controller' => 'Dashboard')); ?></li>
+  <li><?= $this->Html->link('<I class="fa fa-home fa-2x"></i>',array('controller' => 'Dashboard'), array('escape'=>false)); ?></li>
+  <i class="fa fa-arrow-right"></i>
   <li><?= $this->Html->link('Fournisseurs',array('controller' => 'Providers', 'action' => 'index')); ?></li>
+  <i class="fa fa-arrow-right"></i>
   <li class="active">Ajouter un fournisseur</li>
 </ol>
 

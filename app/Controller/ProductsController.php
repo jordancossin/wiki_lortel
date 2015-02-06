@@ -21,9 +21,26 @@ class ProductsController extends AppController {
  *
  * @return void
  */
-	public function index() {
-		$this->Product->recursive = 0;
-		$this->set('products', $this->Paginator->paginate());
+	public function index() 
+	{
+		
+		if (isset($this->request->data['Product']))
+		{
+
+			$product_name = $this->request->data['Product']['name'];
+
+			$this->Paginator->settings = array(
+				'fields' => array('Product.id', 'Product.name'),
+		        'conditions' => array('Product.name LIKE' => '%'.$product_name.'%'),
+		        'limit' => 10
+		    );
+		    $products = $this->Paginator->paginate('Product');
+		    $this->set(compact('products'));
+		}
+		else
+		{
+			$this->set('products', $this->Paginator->paginate('Product'));
+		}
 	}
 
 /**
@@ -70,18 +87,26 @@ class ProductsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
-		if (!$this->Product->exists($id)) {
+	public function edit($id = null) 
+	{
+		if (!$this->Product->exists($id))
+		{
 			throw new NotFoundException(__('Invalid product'));
 		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Product->save($this->request->data)) {
+		if ($this->request->is(array('post', 'put'))) 
+		{
+			if ($this->Product->save($this->request->data)) 
+			{
 				$this->Session->setFlash(__('The product has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
+				return $this->redirect(array('action' => 'edit', $id ));
+			} 
+			else 
+			{
 				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
 			}
-		} else {
+		} 
+		else 
+		{
 			$options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
 			$this->request->data = $this->Product->find('first', $options);
 		}
@@ -90,6 +115,9 @@ class ProductsController extends AppController {
 		$modifyUsers = $this->Product->ModifyUser->find('list');
 		$providers = $this->Product->Provider->find('list');
 		$this->set(compact('categories', 'createUsers', 'modifyUsers', 'providers'));
+
+		$this->Product->recursive = 0;
+		$this->set('products' ,$this->Paginator->paginate());
 	}
 
 /**

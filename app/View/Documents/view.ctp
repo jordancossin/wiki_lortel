@@ -1,77 +1,22 @@
-<div class="documents view">
-<h2><?php echo __('Document'); ?></h2>
-	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($document['Document']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Name'); ?></dt>
-		<dd>
-			<?php echo h($document['Document']['name']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('File Name'); ?></dt>
-		<dd>
-			<?php echo h($document['Document']['file_name']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('File Type'); ?></dt>
-		<dd>
-			<?php echo h($document['Document']['file_type']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Provider'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($document['Provider']['name'], array('controller' => 'providers', 'action' => 'view', $document['Provider']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Product'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($document['Product']['name'], array('controller' => 'products', 'action' => 'view', $document['Product']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Category'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($document['Category']['name'], array('controller' => 'categories', 'action' => 'view', $document['Category']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Created'); ?></dt>
-		<dd>
-			<?php echo h($document['Document']['created']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Create User'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($document['CreateUser']['id'], array('controller' => 'users', 'action' => 'view', $document['CreateUser']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
-		<dd>
-			<?php echo h($document['Document']['modified']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modify User'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($document['ModifyUser']['id'], array('controller' => 'users', 'action' => 'view', $document['ModifyUser']['id'])); ?>
-			&nbsp;
-		</dd>
-	</dl>
+<div class="documents form">
+	<?php echo $this->Form->create('Document'); ?>
+	<fieldset>
+	<?php echo $this->Form->create('Document'); ?>
+	<fieldset>
+	<legend><?php echo __('Modifier le document'); ?></legend>
+	<?php
+		echo $this->Form->input('id');
+		echo $this->Form->input('name');
+		echo $this->Form->input('file_name', array('label' => 'Nom du fichier'));
+		echo $this->Form->input('file_type', array('label' => 'Type de fichier'));
+		echo $this->Form->end(array('label'=>'Enregistrer les modifications', 'class' => 'btn btn-success btn-search')); 
+	?>
+	</fieldset>
 </div>
+
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Document'), array('action' => 'edit', $document['Document']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Document'), array('action' => 'delete', $document['Document']['id']), array(), __('Are you sure you want to delete # %s?', $document['Document']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Documents'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Document'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Providers'), array('controller' => 'providers', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Provider'), array('controller' => 'providers', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Create User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+	<h3><?php echo __('Aide'); ?></h3>
+	Pour éviter tout problème de document entre votre espace personnel et d'autres utilisateur, veuillez bien indiquer vos changements......
+		</li>
 	</ul>
 </div>

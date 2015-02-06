@@ -7,11 +7,6 @@
 		echo $this->Form->input('question');
 		echo $this->Form->input('answer');
 		echo $this->Form->input('activate');
-		echo $this->Form->input('id_category');
-		echo $this->Form->input('id_product');
-		echo $this->Form->input('id_provider');
-		echo $this->Form->input('created_id_user');
-		echo $this->Form->input('modified_id_user');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

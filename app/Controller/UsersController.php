@@ -1,10 +1,10 @@
 <?php
-
 class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('add', 'logout');
+	
     }
 
     public function index() {
@@ -71,19 +71,16 @@ class UsersController extends AppController {
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
-                return $this->redirect('./dashboard');
+                return $this->redirect(array('controller' => 'Dashboard','action' => 'index'));
             } else {
                 $this->Session->setFlash(__("Identifiant ou mot de passe invalide, réessayer"));
             }
         }
     }
-	public function dashboard(){
-		
-	}
 	
-    public function logout() {
+   public function logout() {
         $this->Auth->logout();
-		return $this->redirect('/');
+		return $this->redirect('./login');
     }
 	
 	

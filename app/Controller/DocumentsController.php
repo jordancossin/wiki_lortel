@@ -39,6 +39,43 @@ class DocumentsController extends AppController {
 		}
 		$options = array('conditions' => array('Document.' . $this->Document->primaryKey => $id));
 		$this->set('document', $this->Document->find('first', $options));
+		
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Document->save($this->request->data)) {
+				$this->Session->setFlash(__('The document has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The document could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('Document.' . $this->Document->primaryKey => $id));
+			$this->request->data = $this->Document->find('first', $options);
+		}
+		$products = $this->Document->Product->find('list');
+		$providers = $this->Document->Provider->find('list');
+		$categories = $this->Document->Category->find('list');
+		$createUsers = $this->Document->CreateUser->find('list');
+		$modifyUsers = $this->Document->ModifyUser->find('list');
+		$this->set(compact('products', 'providers', 'categories', 'createUsers', 'modifyUsers'));
+	
+	
+	$this->Document->recursive = 0;
+		if (isset($this->request->data['Doc']))
+		{
+
+			$document_name = $this->request->data['Document']['name'];
+
+			$this->Paginator->settings = array(
+		        'conditions' => array('Document.name LIKE' => '%'.$document_name.'%'),
+		        'limit' => 10
+		    );
+		    $documents = $this->Paginator->paginate('Document');
+		    $this->set(compact('documents'));
+		}
+		else
+		{
+			$this->set('documents', $this->Paginator->paginate('Document'));
+		}
 	}
 
 /**
@@ -72,6 +109,7 @@ class DocumentsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		
 		if (!$this->Document->exists($id)) {
 			throw new NotFoundException(__('Invalid document'));
 		}
@@ -92,8 +130,26 @@ class DocumentsController extends AppController {
 		$createUsers = $this->Document->CreateUser->find('list');
 		$modifyUsers = $this->Document->ModifyUser->find('list');
 		$this->set(compact('products', 'providers', 'categories', 'createUsers', 'modifyUsers'));
-	}
+	
+	
+	$this->Document->recursive = 0;
+		if (isset($this->request->data['Doc']))
+		{
 
+			$document_name = $this->request->data['Document']['name'];
+
+			$this->Paginator->settings = array(
+		        'conditions' => array('Document.name LIKE' => '%'.$document_name.'%'),
+		        'limit' => 10
+		    );
+		    $documents = $this->Paginator->paginate('Document');
+		    $this->set(compact('documents'));
+		}
+		else
+		{
+			$this->set('documents', $this->Paginator->paginate('Document'));
+		}
+}
 /**
  * delete method
  *

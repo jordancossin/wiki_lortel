@@ -21,8 +21,8 @@ class ProvidersController extends AppController {
  *
  * @return void
  */
-	public function index() {
-
+	public function index() 
+	{
 		if (isset($this->request->data['Search'])){
 			$nameProvider = $this->request->data['Search']['name'];
 			$nameTag = $this->request->data['Search']['tag'];
@@ -70,6 +70,24 @@ class ProvidersController extends AppController {
 		{
 			$this->set('providers', $this->Provider->find('all'));
 		}
+		
+		if (isset($this->request->data['PROVIDER']))
+		{
+			$provider_name = $this->request->data['Provider']['name'];
+
+			$this->Paginator->settings = array(
+				'fields' => array('Provider.id', 'Provider.name'),
+		        'conditions' => array('Provider.name LIKE' => '%'.$provider_name.'%'),
+		        'limit' => 10
+		    );
+		    $providers = $this->Paginator->paginate('Provider');
+		    $this->set(compact('providers'));
+		}
+		else
+		{
+			$this->set('providers', $this->Paginator->paginate('Provider'));
+		}
+		
 	}
 
 /**
@@ -97,7 +115,7 @@ class ProvidersController extends AppController {
 			$this->Provider->create();
 			if ($this->Provider->save($this->request->data)) {
 				$this->Session->setFlash(__('The provider has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index', $id));
 			} else {
 				$this->Session->setFlash(__('The provider could not be saved. Please, try again.'));
 			}
@@ -123,7 +141,7 @@ class ProvidersController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Provider->save($this->request->data)) {
 				$this->Session->setFlash(__('The provider has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'edit', $id));
 			} else {
 				$this->Session->setFlash(__('The provider could not be saved. Please, try again.'));
 			}
@@ -135,9 +153,26 @@ class ProvidersController extends AppController {
 		$modifyUsers = $this->Provider->ModifyUser->find('list');
 		$products = $this->Provider->Product->find('list');
 		$tags = $this->Provider->Tag->find('list');
-		$this->set(compact('createUsers', 'modifyUsers', 'products', 'tags'));
-	}
+		$this->set(compact('createUsers', 'modifyUsers', 'products', 'tags'));	
+		
+		$this->Provider->recursive = 0;
+		if (isset($this->request->data['Provider']))
+		{
 
+			$provider_name = $this->request->data['Provider']['name'];
+
+			$this->Paginator->settings = array(
+		        'conditions' => array('Provider.name LIKE' => '%'.$provider_name.'%'),
+		        'limit' => 10
+		    );
+		    $providers = $this->Paginator->paginate('Provider');
+		    $this->set(compact('providers'));
+		}
+		else
+		{
+			$this->set('providers', $this->Paginator->paginate('Provider'));
+		}
+	}
 /**
  * delete method
  *
@@ -157,64 +192,5 @@ class ProvidersController extends AppController {
 			$this->Session->setFlash(__('The provider could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}
-	
-	public function search(){
-		
-		if (isset($this->request->data['Search'])){
-			$nameProvider = $this->request->data['Search']['name'];
-			$nameTag = $this->request->data['Search']['tag'];
-			
-			$options['joins'] = array(
-					array('table' => 'tags_providers',
-						'alias' => 'TagProvider',
-						'type' => 'inner',
-						'conditions' => array(
-							'Provider.id = TagProvider.id_provider'
-						)
-					),
-					array('table' => 'tags',
-						'alias' => 'Tag',
-						'type' => 'inner',
-						'conditions' => array(
-							'TagProvider.id_tag = Tag.id'
-						)	
-					)
-				);
-	
-				$options['conditions'] = array(
-					'Provider.name LIKE ' => '%'.$nameProvider.'%', 'OR' => array(
-					'Tag.name IN ' => '('.$nameTag.')'));
-					
-				$providers_found = $this->Provider->find('all', $options);			
-				$this->set('providers', $providers_found);
-				 // print_r($options);
-				// $this->set('options', $options);
-		}
-		else
-		{
-			$this->set('providers', $this->Provider->find('all'));
-		}
-
-	}
-	
-	public function detailfrs($id = null){
-		
-		if (isset($id)){
-			
-			$dataProvider = $this->Provider->find('first', [
-				'conditions' => ['Provider.id = ' => $id]
-			]);
-			$this->set('provider', $dataProvider);
-			
-		}
-		else
-		{
-			return $this->redirect(array('action' => 'search'));
-		}
-	}
-	
-	public function update(){
-		
 	}
 }

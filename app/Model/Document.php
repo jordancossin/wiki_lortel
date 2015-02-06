@@ -11,6 +11,8 @@ App::uses('AppModel', 'Model');
  */
 class Document extends AppModel {
 
+
+public $useTable = 'documents';
 /**
  * Display field
  *
@@ -26,7 +28,7 @@ class Document extends AppModel {
 	public $validate = array(
 		'name' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -44,7 +46,7 @@ class Document extends AppModel {
 		),
 		'file_name' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -62,7 +64,7 @@ class Document extends AppModel {
 		),
 		'file_type' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength',25),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

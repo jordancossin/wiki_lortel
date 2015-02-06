@@ -25,10 +25,11 @@ public $useTable = 'providers';
  *
  * @var array
  */
+ 
 	public $validate = array(
 		'name' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -46,7 +47,7 @@ public $useTable = 'providers';
 		),
 		'description' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -83,6 +84,7 @@ public $useTable = 'providers';
 			),
 		),
 	);
+	
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 

@@ -3,22 +3,18 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-left" >
-        <a class="navbar-brand" href=".">
-          Wiki-Lortel
-        </a>
-      </ul>
-      <ul class="nav navbar-nav navbar-left" >
-        <li><?= $this->Html->link('Fournisseur',array('controller' => 'Providers', 'action' => 'index')); ?></li>
-        <li><?= $this->Html->link('Catalogue',array('controller' => 'Categories', 'action' => 'index'));  ?></li>
+		<li><?= $this->Html->link('<i class="fa fa-home"></i> Lortel', array('controller' => 'Dashboard', 'action' => 'index'), array('class' => 'btn btn-default', 'escape'=>false)); ?></li>
+        <li><?= $this->Html->link('<i class="fa fa-users"></i> Fournisseurs',array('controller' => 'Providers', 'action' => 'index'), array('class' => 'btn btn-default', 'escape'=>false)); ?></li>
+        <li><?= $this->Html->link('<i class="fa fa-file-pdf-o"></i> Catalogue',array('controller' => 'Categories', 'action' => 'index'), array('class' => 'btn btn-default ', 'escape'=>false)); ?></li>
         <li>
           <form role="search">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Rechercher">
             </div>
           </form>
+		  </center>
         </li>
       </ul>
-      
       <div class="form-group navbar-right">
         <a href="#"><?= $this->Html->link('<i class="fa fa-power-off"></i> Déconnexion', 
                                         array('controller' => 'Users', 'action' => 'logout'),

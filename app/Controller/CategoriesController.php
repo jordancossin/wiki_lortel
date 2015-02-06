@@ -15,38 +15,99 @@ class CategoriesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator', 'Session');
-
 /**
  * index method
  *
  * @return void
  */
-	public function index() {
-
+	public function index($id_provider = 0, $id_category = 0) 
+	{
 		$this->Category->recursive = 0;
-
+		$this->set('menuCategories', $this->Category->find('all'));
+		
+		// Recherche d'une catégorie
 		if (isset($this->request->data['Search']))
 		{
+			
+			$nameCategory = $this->request->data['Search']['name'];
+				$options['conditions'] = array(
+				'Category.name LIKE ' => '%'.$nameCategory.'%');
+				$categories = $this->Category->find('all', $options);
+				
+			$options2['fields'] = array('DISTINCT Products.id', 'Products.name', 'Products.reference, Category.name');
 
-			$category_name = $this->request->data['Search']['name'];
-
-			$this->Paginator->settings = array(
-		        'conditions' => array('Category.name LIKE' => '%'.$category_name.'%'),
-		        'limit' => 10
-		    );
-		    $categories = $this->Paginator->paginate('Category');
-		    $this->set(compact('categories'));
-		}
-		else
+			$options2['joins'] = array(
+				array('table' => 'categories',
+					'alias' => 'categori',
+					'type' => 'inner',
+					'conditions' => array(
+						'categori.id = Products.id_category'
+					)
+				)
+			);
+			$options2['conditions'] = array(
+				'categori.name LIKE ' => '%'.$nameCategory.'%');
+				$products = $this->Category->Products->find('all', $options2);
+			
+			if(isset($products) && !empty($products))
+			{
+				$this->set('products', $products);
+			}
+			
+			if(isset($categories) && !empty($categories))
+			{
+				$this->set('categories', $categories);
+			}
+		}	 
+		elseif($id_provider > 0) //Affichage de tous les produits d'un fournisseur dont l'id est passé en paramètre
 		{
-			$this->set('categories', $this->Paginator->paginate('Category'));
+			$options['fields'] = array('DISTINCT Products.id', 'Products.name', 'Products.reference, Category.name');
+
+			$options['joins'] = array(
+					array('table' => 'products_providers',
+						'alias' => 'ProdProviders',
+						'type' => 'inner',
+						'conditions' => array(
+							'Products.id = ProdProviders.id_product'
+						)
+					),
+					array('table' => 'providers',
+						'alias' => 'Pro',
+						'type' => 'inner',
+						'conditions' => array(
+							'ProdProviders.id_provider = Pro.id'
+						)
+					)
+				);
+			$options['conditions'] = array(
+				'Pro.id = ' => $id_provider);
+				
+			$products = $this->Category->Products->find('all', $options);
+			if(isset($products) && !empty($products))
+			{
+				$this->set('products', $products);
+			}
 		}
+		elseif($id_category > 0) //Affichage d'une catégorie après avoir cliqué sur le menu des catégories
+		{
+			$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id_category));
+			$infoCategory = $this->Category->find('first', $options);
+			$this->set('infoCategory', $infoCategory);
+			
+			$options['fields'] = array('DISTINCT Products.id', 'Products.name', 'Products.reference, Category.name');
+			$options['conditions'] = array(
+				'Products.id_category = ' => $id_category
+			);
+			$products = $this->Category->Products->find('all', $options);
+			
+			if(isset($products) && !empty($products))
+			{
+				$this->set('products', $products);
+			}
+		}
+		
 	}
-
-
-	
-
-/**
+/**documents_desc
  * view method
  *
  * @throws NotFoundException
@@ -129,15 +190,5 @@ class CategoriesController extends AppController {
 			$this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}
-	
-	public function refprod(){
-		
-		
-	}
-	
-	public function descprod(){
-		
-		
 	}
 }

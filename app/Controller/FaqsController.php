@@ -46,22 +46,43 @@ class FaqsController extends AppController {
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Faq->create();
-			if ($this->Faq->save($this->request->data)) {
-				$this->Session->setFlash(__('The faq has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
+	public function add()
+	{
+		
+		if (isset($this->request->data['Faq']['id_product']))
+		{
+			//Ajout d'un faq sur un produit
+			if ($this->request->is('post')) {
+				$this->Faq->create();
+				if ($this->Faq->save($this->request->data)) 
+				{
+					$this->Session->setFlash(__('Votre question a bien été sauvegardée.'));
+					return $this->redirect(array('controller' => 'Products', 'action' => 'edit', $this->request->data['Faq']['id_product']));
+				} 
+				else 
+				{
+					$this->Session->setFlash(__('The faq could not be saved. Please, try again.'));
+				}
+			}	
+		}
+		elseif (isset($this->request->data['Faq']['id_category']))
+		{
+			//Ajout d'un faq sur une catégorie
+			return $this->redirect(array('controller' => 'Categories', 'action' => 'index', 0, $id_category));
+		}
+		elseif (isset( $this->request->data['Faq']['id_provider']))
+		{
+			//Ajout d'un faq sur un fournisseur
+			if ($this->Faq->save($this->request->data)) 
+			{
+				$this->Session->setFlash(__('Votre question a bien été sauvegardée.'));
+				return $this->redirect(array('controller' => 'Providers', 'action' => 'edit', $this->request->data['Faq']['id_provider']));
+			}
+			else 
+			{
 				$this->Session->setFlash(__('The faq could not be saved. Please, try again.'));
 			}
-		}
-		$categories = $this->Faq->Category->find('list');
-		$products = $this->Faq->Product->find('list');
-		$providers = $this->Faq->Provider->find('list');
-		$createUsers = $this->Faq->CreateUser->find('list');
-		$modifyUsers = $this->Faq->ModifyUser->find('list');
-		$this->set(compact('categories', 'products', 'providers', 'createUsers', 'modifyUsers'));
+		} 
 	}
 
 /**
@@ -76,6 +97,7 @@ class FaqsController extends AppController {
 			throw new NotFoundException(__('Invalid faq'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+			$this->Faq->create();
 			if ($this->Faq->save($this->request->data)) {
 				$this->Session->setFlash(__('The faq has been saved.'));
 				return $this->redirect(array('action' => 'index'));
@@ -92,7 +114,27 @@ class FaqsController extends AppController {
 		$createUsers = $this->Faq->CreateUser->find('list');
 		$modifyUsers = $this->Faq->ModifyUser->find('list');
 		$this->set(compact('categories', 'products', 'providers', 'createUsers', 'modifyUsers'));
-	}
+		
+		$this->Faq->recursive = 0;
+		if (isset($this->request->data['FAQ']))
+		{
+			$faq_name = $this->request->data['Faq']['name'];
+
+			$this->Paginator->settings = array(
+				'fields' => array('Faq.id', 'Faq.question', 'Faq.answer'),
+		        'conditions' => array('Faq.name LIKE' => '%'.$faq_name.'%'),
+		        'limit' => 10
+		    );
+		    $faqs = $this->Paginator->paginate('Faq');
+		    $this->set(compact('faqs'));
+		}
+		else
+		{
+			$this->set('faqs', $this->Paginator->paginate('Faq'));
+		}
+		
+		
+    }
 
 /**
  * delete method
@@ -101,17 +143,24 @@ class FaqsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
+	public function delete($id = null) 
+	{
 		$this->Faq->id = $id;
-		if (!$this->Faq->exists()) {
+		if (!$this->Faq->exists()) 
+		{
 			throw new NotFoundException(__('Invalid faq'));
 		}
 		$this->request->allowMethod('post', 'delete');
-		if ($this->Faq->delete()) {
+		if ($this->Faq->delete()) 
+		{
 			$this->Session->setFlash(__('The faq has been deleted.'));
-		} else {
+		} else 
+		{
 			$this->Session->setFlash(__('The faq could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
+		
 	}
+   
+	
 }

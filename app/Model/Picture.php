@@ -28,7 +28,7 @@ class Picture extends AppModel {
 	public $validate = array(
 		'name' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -46,7 +46,7 @@ class Picture extends AppModel {
 		),
 		'file_name' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -64,7 +64,7 @@ class Picture extends AppModel {
 		),
 		'file_type' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 3),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

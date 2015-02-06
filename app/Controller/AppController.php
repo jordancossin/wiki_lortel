@@ -39,11 +39,16 @@ class AppController extends Controller {
         'DebugKit.Toolbar',
         'Auth' => array(
             'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
+            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'), 
+			'Security' => array(
+			'csrfUseOnce' => true,
+			'csrfExpires' => ' +15 minutes', 
+			'csrfCheck' => true)
         )
     );
 
     public function beforeFilter() {
         $this->Auth->allow('index', 'view');
+		
     }
 }

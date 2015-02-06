@@ -28,7 +28,7 @@ class Product extends AppModel {
 	public $validate = array(
 		'name' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -46,7 +46,7 @@ class Product extends AppModel {
 		),
 		'reference' => array(
 			'maxLength' => array(
-				'rule' => array('maxLength'),
+				'rule' => array('maxLength', 255),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -63,15 +63,12 @@ class Product extends AppModel {
 			),
 		),
 		'description' => array(
-			'maxLength' => array(
-				'rule' => array('maxLength'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
 		'created' => array(
 			'datetime' => array(
 				'rule' => array('datetime'),
@@ -177,9 +174,8 @@ class Product extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
-	);
-
+        )
+    );
 
 /**
  * hasAndBelongsToMany associations
